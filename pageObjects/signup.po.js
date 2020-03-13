@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = class Signup {
-    constructor () {
+    constructor() {
         this.signUpModal = '#signupModal';
         this.user_email = '#signupModal #user_email';
         this.user_password = '#signupModal #user_password';
