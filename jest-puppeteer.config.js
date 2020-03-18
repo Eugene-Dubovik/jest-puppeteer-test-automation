@@ -6,7 +6,7 @@ module.exports = {
     headless: false,
     defaultViewport: null,
     slowMo: 100,
-    args: ['--start-fullscreen', '--disable-infobars', '--enable-features=NetworkService'],
+    args: ['--start-fullscreen', '--disable-infobars'],
   },
   // browser: 'chromium',
   browserContext: 'default'

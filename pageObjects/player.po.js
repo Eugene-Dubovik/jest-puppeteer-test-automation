@@ -12,6 +12,8 @@ module.exports = class Player {
         this.helpButton = 'button.vjs-help-button';
         this.helpModalWindow = '#player-help';
         this.videoSpeedControl = 'button.vjs-play-speed-control';
+        this.changeQualityButton = 'button.vjs-resolution-button';
+        this.subtitlesButton = 'button.vjs-subtitles-button';
     }
     
 }
