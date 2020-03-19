@@ -14,6 +14,8 @@ module.exports = class Player {
         this.videoSpeedControl = 'button.vjs-play-speed-control';
         this.changeQualityButton = 'button.vjs-resolution-button';
         this.subtitlesButton = 'button.vjs-subtitles-button';
+        this.fullscreenButton = 'button.vjs-fullscreen-control';
+        this.closePlayerButton = 'a.video-close-button';
     }
     
 }

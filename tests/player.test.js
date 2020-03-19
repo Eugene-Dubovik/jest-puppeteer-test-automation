@@ -2,25 +2,29 @@ require('dotenv').config()
 const TVShowContent = require('../pageObjects/show.content.po');
 const Player = require('../pageObjects/player.po');
 const { installMouseHelper } = require('../helpers/install-mouse-pointer-helper');
+const BrowserHellper = require('../helpers/browser-helper');
 
 let tvShowContent;
 let player;
+let browserHelper;
 
 describe('Ororo.tv', () => {
     beforeAll(async () => {
         tvShowContent = new TVShowContent();
         player = new Player();
+        browserHelper = new BrowserHellper();
         await installMouseHelper(page);
     });
     beforeEach(async () => {
         await page.goto('https://ororo.tv/en', { waitUntil: 'networkidle2' });
-        
+
     });
 
-    afterEach(async() => {
+    afterEach(async () => {
+        await browserHelper.clearBrowserSession();
         await jestPuppeteer.resetPage();
     });
-    
+
 
     it('authorized user should be able to see choose TV show ', async () => {
         const cookieObject = {
@@ -40,13 +44,13 @@ describe('Ororo.tv', () => {
         await page.screenshot({ path: `screenshots/${tvShowContent.screenshotName}` });
     });
     it('should return 200 status code for request on videoplayback', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -61,13 +65,13 @@ describe('Ororo.tv', () => {
         await page.waitFor(player.videoPlayer, { visible: true, timeout: 5000 });
     });
     it('video can be paused and resumed', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -91,13 +95,13 @@ describe('Ororo.tv', () => {
         await expect(getPlayButtonClass).toEqual('vjs-playing');
     });
     it('video can be rewinded with the help of keys', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -113,13 +117,13 @@ describe('Ororo.tv', () => {
         await expect(timeRewindedValue).toMatch(/([0-9\:]){5}\W([f-o]){2}\W([0-9\:]){5}/);
     });
     it('video can be rewinded with the help of mouse', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -136,13 +140,13 @@ describe('Ororo.tv', () => {
         await page.screenshot({ path: `screenshots/${tvShowContent.screenshotName}` });
     });
     it('timeline panel should show progress bar', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -184,13 +188,13 @@ describe('Ororo.tv', () => {
         await expect(getMuteButtonText).toEqual('Unmute');
     });
     it('volume should be changed with the help of keys', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -208,13 +212,13 @@ describe('Ororo.tv', () => {
         await expect(getVolumeBarValue).toEqual('90');
     });
     it('volume should be changed with the help of mouse', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -231,13 +235,13 @@ describe('Ororo.tv', () => {
         await expect(volumeBarValue).toMatch(/[0-9]{1,2}/);
     });
     it('show title should be displayed', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -251,13 +255,13 @@ describe('Ororo.tv', () => {
         await expect(getShowTitleText).toEqual('S01E01 Pilot');
     });
     it('show title should be changed when choose another episode', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -273,13 +277,13 @@ describe('Ororo.tv', () => {
         await expect(showTitleText).toEqual('S01E02 The Big Three');
     });
     it('show episodes can be changed by pressing "Next"', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -297,13 +301,13 @@ describe('Ororo.tv', () => {
         await expect(showTitleText).toEqual('S01E02 The Big Three');
     });
     it('modal window with help should appear when pressing on "Help"', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -313,7 +317,7 @@ describe('Ororo.tv', () => {
         await page.waitFor(player.videoPlayer, { visible: true, timeout: 5000 });
         await page.waitFor(player.timeline, { visible: true, timeout: 5000 });
         await page.waitFor(player.helpButton, { visible: true, timeout: 5000 });
-        await page.click(player.helpButton, {delay:100});
+        await page.click(player.helpButton, { delay: 100 });
         await page.waitFor(player.helpModalWindow, { visible: true });
         await expect(player.helpModalWindow).toBeTruthy();
         const getHelpModalWindowStyle = await page.$eval(player.helpModalWindow, el => el.attributes[3].value);
@@ -321,13 +325,13 @@ describe('Ororo.tv', () => {
         await page.screenshot({ path: `screenshots/${tvShowContent.screenshotName}` });
     });
     it('video speed control should be displayed when pressed', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
 
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) chooseShow.click();
@@ -345,12 +349,12 @@ describe('Ororo.tv', () => {
         await page.screenshot({ path: `screenshots/${tvShowContent.screenshotName}` });
     });
     it('video speed should be changed in accordance with chosen speed value', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle0' });
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
         await page.waitForXPath(tvShowContent.showCard, 5000);
         const [chooseShow] = await page.$x(tvShowContent.showCard);
         if (chooseShow) await chooseShow.click();
@@ -376,17 +380,19 @@ describe('Ororo.tv', () => {
         await clickVideoSpeed(videoSpeedControlValues);
     });
     it('streaming quality should be changed in accordance with the chosen quality', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle2' });
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle2' });
         await page.goto('https://ororo.tv/en/shows/this-is-us#1-1');
+        await page.waitFor(1000);
+        await page.keyboard.press('Space');
         await page.waitFor(player.videoPlayer, { visible: true, timeout: 5000 });
         await page.waitFor(player.timeline, { visible: true, timeout: 5000 });
-        await page.waitFor(player.changeQualityButton, { visible: true, timeout: 10000 });
-        await page.waitForSelector(player.changeQualityButton)
+        await page.waitFor(player.changeQualityButton, { visible: true, timeout: 5000 });
+        await page.waitForSelector(player.changeQualityButton);
         await page.click(player.changeQualityButton);
         const getChangeQualityButtonTitle = await page.$eval('button.vjs-resolution-button', el => el.title);
         await expect(getChangeQualityButtonTitle).toEqual('Quality');
@@ -407,12 +413,12 @@ describe('Ororo.tv', () => {
         await clickOnChangeQuality(changeQualityButtonValues);
     });
     it('subtitles should be changed in accordance with the chosen subtitles', async () => {
-        // const cookieObject = {
-        //     name: process.env.COOKIE_NAME,
-        //     value: process.env.COOKIE_VALUE
-        // };
-        // await page.setCookie(cookieObject);
-        // await page.reload({ waitUntil: 'networkidle2' });
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle2' });
         await page.goto('https://ororo.tv/en/shows/this-is-us#1-1');
         await page.waitFor(player.videoPlayer, { visible: true, timeout: 5000 });
         await page.keyboard.press('Space');
@@ -423,16 +429,67 @@ describe('Ororo.tv', () => {
         await page.click(player.subtitlesButton);
         const subtitlesValue = await page.$$eval('div.vjs-lock-showing ul.vjs-menu-content li.vjs-menu-item span:nth-child(2)', el => el.map(e => e.textContent));
         async function clickOnSubtitles(array) {
-            for(const value of array) {
+            for (const value of array) {
                 let chooseSubtitlesSelector = `//span[text()="${value}"]/preceding-sibling::span[@class="checkbox-item"] `;
                 const chooseSubtitles = await page.waitForXPath(chooseSubtitlesSelector);
                 await chooseSubtitles.click();
                 const chooseSubtitlesChecked = await page.$eval('div.vjs-lock-showing ul.vjs-menu-content li[class~="vjs-menu-item"][aria-checked]', el => el.attributes[5].value);
                 await expect(chooseSubtitlesChecked).toEqual('true');
-                
+
             }
         };
         await clickOnSubtitles(subtitlesValue);
+    });
+    it('error meassage of internet connection loss should be returned when internet disconnected', async () => {
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
+
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle0' });
+        await page.goto('https://ororo.tv/en/shows/this-is-us#1-1');
+        const errorMesssage = page.on('requestfailed', request => {
+            console.log(request.failure().errorText, request.url);
+        });
+        await page.waitFor(player.videoPlayer, { visible: true, timeout: 5000 });
+        await page.setOfflineMode(true);
+        await page.waitFor(5000);
+        await expect(errorMesssage).toBe(errorMesssage);
+    });
+    it('video should be fullscreen when pressed on fullscreen button', async () => {
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle2' });
+        await page.goto('https://ororo.tv/en/shows/this-is-us#1-1');
+        await page.waitFor(player.videoPlayer, { visible: true, timeout: 5000 });
+        await page.keyboard.press('Space');
+        await page.waitFor(player.timeline, { visible: true, timeout: 5000 });
+        await page.waitForSelector(player.fullscreenButton);
+        const fullscreenButtonTitle = await page.$eval(player.fullscreenButton, el => el.title);
+        await expect(fullscreenButtonTitle).toEqual('Fullscreen');
+        await page.click(player.fullscreenButton);
+        const fullscreenButtonTitleAfterClicked = await page.$eval(player.fullscreenButton, el => el.title);
+        await expect(fullscreenButtonTitleAfterClicked).toEqual('Non-Fullscreen');
+    });
+    it('player should be closed when pressed on "close" button', async () => {
+        const cookieObject = {
+            name: process.env.COOKIE_NAME,
+            value: process.env.COOKIE_VALUE
+        };
+        await page.setCookie(cookieObject);
+        await page.reload({ waitUntil: 'networkidle2' });
+        await page.goto('https://ororo.tv/en/shows/this-is-us#1-1');
+        await page.waitFor(player.videoPlayer, { visible: true, timeout: 5000 });
+        await page.keyboard.press('Space');
+        await page.waitFor(player.timeline, { visible: true, timeout: 5000 });
+        await page.waitForSelector(player.closePlayerButton);
+        await page.click(player.closePlayerButton);
+        await page.waitForSelector(tvShowContent.showContent);
+        await expect(page).toMatchElement(tvShowContent.showContent);
     });
 });
 
