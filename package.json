@@ -1,0 +1,27 @@
+{
+  "name": "jest-puppeteer-test-automation",
+  "version": "1.0.0",
+  "description": "Test automation framework using jest puppeteer",
+  "main": "",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Eugene-Dubovik/jest-puppeteer-test-automation.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eugene-Dubovik/jest-puppeteer-test-automation/issues"
+  },
+  "homepage": "https://github.com/Eugene-Dubovik/jest-puppeteer-test-automation#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "jest-puppeteer": "^4.4.0",
+    "puppeteer": "^2.1.1"
+  }
+}
